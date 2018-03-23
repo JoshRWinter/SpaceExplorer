@@ -19,9 +19,9 @@ namespace SpaceExplorer
         // bounding box collision detection
         // positive tolerance to allow entities to slightly collide
         // negative tolerance will return true even if enemies are not quite colliding
-        bool Collide(Entity other, double tolerance = 0.0)
+        internal bool Collide(Entity other, double tolerance = 0.0)
         {
-            return X + Width > other.X + tolerance && X < (other.X + other.Width) - tolerance && Y + Height > other.Y + tolerance && Y < (other.Y + other.Width) - tolerance; // sufficiently cryptic
+            return X + Width > other.X + tolerance && X < (other.X + other.Width) - tolerance && Y + Height > other.Y + tolerance && Y < (other.Y + other.Height) - tolerance; // sufficiently cryptic
         }
 
         // on screen coordinates

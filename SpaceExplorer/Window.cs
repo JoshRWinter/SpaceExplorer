@@ -60,6 +60,7 @@ namespace SpaceExplorer
             // collect some state from the game class
             Player player = game.Player1;
             List<Bullet> bullets = game.Bullets;
+            List<Enemy> enemies = game.Enemies;
 
             // draw the player
             {
@@ -80,6 +81,18 @@ namespace SpaceExplorer
                 float y = bullet.Y;
                 AdjustCoords(ref x, ref y, player);
                 painter.Graphics.DrawLine(pen, x, y, x - bullet.Xv, y - bullet.Yv);
+            }
+
+            // draw the enemies
+            foreach(Enemy enemy in enemies)
+            {
+                Bitmap tex = assets.GetEnemy(enemy.Rot);
+                float ex = enemy.X;
+                float ey = enemy.Y;
+                AdjustCoords(ref ex, ref ey, player);
+                float x = (ex + (Enemy.WIDTH / 2)) - (tex.Width / 2);
+                float y = (ey + (Enemy.HEIGHT / 2)) - (tex.Height / 2);
+                painter.Graphics.DrawImage(tex, x, y, tex.Width, tex.Height);
             }
         }
 
@@ -175,6 +188,9 @@ namespace SpaceExplorer
     // hold bitmap assets (textures)
     internal class Assets
     {
+        private Bitmap[] player;
+        private Bitmap[] enemy;
+
         internal Assets()
         {
             try
@@ -187,15 +203,19 @@ namespace SpaceExplorer
             }
         }
 
+        // precompute 360 degrees of rotation for each bitmap
         private void Load()
         {
             player = new Bitmap[360];
+            enemy = new Bitmap[360];
             
             Bitmap playerBmp = new Bitmap(@"C:\Users\Josh\Desktop\SpaceExplorer\SpaceExplorer\assets\player.png");
+            Bitmap enemyBmp = new Bitmap(@"C:\Users\Josh\Desktop\SpaceExplorer\SpaceExplorer\assets\enemy.png");
 
             for(int i = 0; i < 360; ++i)
             {
                 player[i] = Rotate(playerBmp, i);
+                enemy[i] = Rotate(enemyBmp, i);
             }
         }
 
@@ -282,7 +302,10 @@ namespace SpaceExplorer
         {
             return player[ToDegrees(radians)];
         }
-
-        private Bitmap[] player;
+        
+        internal Bitmap GetEnemy(float radians)
+        {
+            return enemy[ToDegrees(radians)];
+        }
     }
 }

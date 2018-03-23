@@ -9,15 +9,18 @@ namespace SpaceExplorer
     {
         // processing multiplier to compensate for fast or slow game loop
         internal static float Delta { get; private set; } = 1.0f;
+        private static Random random = new Random();
 
         // game state
         internal Player Player1 { get; private set; }
         internal List<Bullet> Bullets { get; private set; }
+        internal List<Enemy> Enemies { get; private set; }
 
         internal SpaceExplorer()
         {
             Player1 = new Player();
             Bullets = new List<Bullet>();
+            Enemies = new List<Enemy>();
         }
 
         // the "tick" function, processes all game entities
@@ -27,7 +30,15 @@ namespace SpaceExplorer
             Player1.Step(ref controls, Bullets);
 
             // process bullets
-            Bullet.Step(Bullets);
+            Bullet.Step(Bullets, Enemies, Player1);
+
+            // process enemies
+            Enemy.Step(Enemies, Bullets, Player1);
+        }
+
+        internal static int RandomInt(int min, int max)
+        {
+            return random.Next(min, max);
         }
 
         internal struct Controls
