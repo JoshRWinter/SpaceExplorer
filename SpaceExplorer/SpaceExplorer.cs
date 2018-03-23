@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 
 namespace SpaceExplorer
 {
@@ -7,20 +8,26 @@ namespace SpaceExplorer
     class SpaceExplorer
     {
         // processing multiplier to compensate for fast or slow game loop
-        internal static double Delta { get; private set; } = 1.0;
+        internal static float Delta { get; private set; } = 1.0f;
 
         // game state
         internal Player Player1 { get; private set; }
+        internal List<Bullet> Bullets { get; private set; }
 
         internal SpaceExplorer()
         {
             Player1 = new Player();
+            Bullets = new List<Bullet>();
         }
 
         // the "tick" function, processes all game entities
         internal void Step(ref Controls controls)
         {
-            Player1.Step(ref controls);
+            // process player
+            Player1.Step(ref controls, Bullets);
+
+            // process bullets
+            Bullet.Step(Bullets);
         }
 
         internal struct Controls

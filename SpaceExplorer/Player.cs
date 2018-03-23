@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 
 namespace SpaceExplorer
 {
@@ -7,18 +8,19 @@ namespace SpaceExplorer
         internal const int WIDTH = 40;
         internal const int HEIGHT = 40;
         internal const int MAX_SPEED = 5;
+        internal const int TIMER_FIRE = 5;
 
         int Health { get; set; }
-        double TimerFire { get; set; }
+        float TimerFire { get; set; }
 
         internal Player() : base(100.0f, 100.0f, WIDTH, HEIGHT)
         {
             Health = 100;
-            TimerFire = 0.0;
+            TimerFire = 0.0f;
         }
 
         // process the player entity
-        internal void Step(ref SpaceExplorer.Controls controls)
+        internal void Step(ref SpaceExplorer.Controls controls, List<Bullet> bulletList)
         {
             Xv = (float)Math.Cos(controls.MovementAngle) * controls.Intensity * MAX_SPEED;
             Yv = (float)Math.Sin(controls.MovementAngle) * controls.Intensity * MAX_SPEED;
@@ -29,6 +31,16 @@ namespace SpaceExplorer
 
             // update look angle
             Rot = controls.LookAngle + (float)Math.PI;
+
+            // shoot
+            if (controls.Firing && TimerFire <= 0.0f)
+            {
+                bulletList.Add(new Bullet(this));
+                TimerFire = TIMER_FIRE;
+            }
+
+            if(TimerFire > 0.0)
+                TimerFire -= SpaceExplorer.Delta;
         }
     }
 }

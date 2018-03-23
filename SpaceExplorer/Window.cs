@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Windows.Forms;
 using System.Drawing;
-using System.IO;
+using System.Collections.Generic;
 
 namespace SpaceExplorer
 {
@@ -59,15 +59,28 @@ namespace SpaceExplorer
         {
             // collect some state from the game class
             Player player = game.Player1;
+            List<Bullet> bullets = game.Bullets;
 
             // draw the player
-            Bitmap tex = assets.GetPlayer(player.Rot);
-            float px = player.X;
-            float py = player.Y;
-            AdjustCoords(ref px, ref py, player);
-            float x = (px + (Player.WIDTH / 2)) - (tex.Width / 2);
-            float y = (py + (Player.HEIGHT / 2)) - (tex.Height / 2);
-            painter.Graphics.DrawImage(tex, x, y, tex.Width, tex.Height);
+            {
+                Bitmap tex = assets.GetPlayer(player.Rot);
+                float px = player.X;
+                float py = player.Y;
+                AdjustCoords(ref px, ref py, player);
+                float x = (px + (Player.WIDTH / 2)) - (tex.Width / 2);
+                float y = (py + (Player.HEIGHT / 2)) - (tex.Height / 2);
+                painter.Graphics.DrawImage(tex, x, y, tex.Width, tex.Height);
+            }
+
+            // draw the bullets
+            Pen pen = new Pen(Color.Black);
+            foreach(Bullet bullet in bullets)
+            {
+                float x = bullet.X;
+                float y = bullet.Y;
+                AdjustCoords(ref x, ref y, player);
+                painter.Graphics.DrawLine(pen, x, y, x - bullet.Xv, y - bullet.Yv);
+            }
         }
 
         protected override void OnMouseMove(MouseEventArgs e)
@@ -79,6 +92,20 @@ namespace SpaceExplorer
             float py = Height / 2;
 
             controls.LookAngle =(float)Math.Atan2(p.Y - (py + (Player.HEIGHT / 2)), p.X - (px + (Player.WIDTH / 2)));
+        }
+
+        protected override void OnMouseDown(MouseEventArgs e)
+        {
+            base.OnMouseDown(e);
+
+            controls.Firing = true;
+        }
+
+        protected override void OnMouseUp(MouseEventArgs e)
+        {
+            base.OnMouseUp(e);
+
+            controls.Firing = false;
         }
 
         protected override void OnKeyDown(KeyEventArgs e)
