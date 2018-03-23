@@ -7,7 +7,7 @@ namespace SpaceExplorer
     {
         internal const int WIDTH = 10;
         internal const int HEIGHT = 10;
-        internal const int SPEED = 10;
+        internal const int SPEED = 14;
         internal const int DAMAGE = 12;
 
         float ttl; // time to live

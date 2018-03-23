@@ -13,7 +13,7 @@ namespace SpaceExplorer
         SpaceExplorer.Controls controls;
         Assets assets;
 
-        Font font;
+        Font font, fontBig;
         Brush brush = new SolidBrush(Color.Red);
 
         // keyboard keypresses
@@ -32,6 +32,7 @@ namespace SpaceExplorer
             Size = new Size(800, 600);
             DoubleBuffered = true;
             font = new Font("Courier New", 10, FontStyle.Regular);
+            fontBig = new Font("Courier New", 30, FontStyle.Italic);
 
             // setup a timer to refresh the screen and process game entities
             stepTimer = new Timer();
@@ -100,7 +101,9 @@ namespace SpaceExplorer
             }
 
             // draw the HUD
-            painter.Graphics.DrawString($"Health: {player.Health}", font, brush, (Width / 2) - 100, Height - 70);
+            painter.Graphics.DrawString($"Health: {(player.Health < 0 ? 0 : player.Health)}", font, brush, (Width / 2) - 100, Height - 70);
+            if (player.Health < 1)
+                painter.Graphics.DrawString("You Died", fontBig, brush, (Width / 2) - 90, (Height / 2) - 100);
         }
 
         protected override void OnMouseMove(MouseEventArgs e)

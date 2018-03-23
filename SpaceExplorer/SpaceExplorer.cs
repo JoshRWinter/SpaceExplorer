@@ -41,10 +41,13 @@ namespace SpaceExplorer
             Enemy.Step(Enemies, Bullets, Player1);
 
             // check for gameover
-            if (Player1.Health < 1 && resetTimer <= 0.0f)
+            if (Player1.Health < 1)
+            {
+                if(resetTimer <= 0.0f)
                 Reset();
-            else
-                resetTimer -= Delta;
+                else
+                    resetTimer -= Delta;
+            }
         }
 
         internal static int RandomInt(int min, int max)
