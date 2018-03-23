@@ -78,4 +78,7 @@
     <None Include="App.config" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <PropertyGroup>
+    <PreBuildEvent>XCOPY "$(SolutionDir)assets" "$(TargetDir)assets" /E /Y /I</PreBuildEvent>
+  </PropertyGroup>
 </Project>

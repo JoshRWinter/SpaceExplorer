@@ -2,6 +2,7 @@
 using System.Windows.Forms;
 using System.Drawing;
 using System.Collections.Generic;
+using System.IO;
 
 namespace SpaceExplorer
 {
@@ -210,7 +211,7 @@ namespace SpaceExplorer
             }
             catch(Exception e)
             {
-                MessageBox.Show(e.Message);
+                MessageBox.Show(e.Message + "\nMake sure the \"assets\" folder is accessible");
             }
         }
 
@@ -219,9 +220,9 @@ namespace SpaceExplorer
         {
             player = new Bitmap[360];
             enemy = new Bitmap[360];
-            
-            Bitmap playerBmp = new Bitmap(@"C:\Users\Josh\Desktop\SpaceExplorer\SpaceExplorer\assets\player.png");
-            Bitmap enemyBmp = new Bitmap(@"C:\Users\Josh\Desktop\SpaceExplorer\SpaceExplorer\assets\enemy.png");
+
+            Bitmap playerBmp = new Bitmap(@"assets\player.png");
+            Bitmap enemyBmp = new Bitmap(@"assets\enemy.png");
 
             for(int i = 0; i < 360; ++i)
             {
