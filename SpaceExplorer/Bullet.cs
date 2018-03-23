@@ -52,6 +52,14 @@ namespace SpaceExplorer
                     }
                 }
 
+                // check for collision with player
+                if (bullet.Collide(player) && bullet.Parent != player)
+                {
+                    player.Hit();
+                    bulletList.RemoveAt(i);
+                    continue;
+                }
+
                 ++i;
             }
         }

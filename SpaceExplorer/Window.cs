@@ -13,6 +13,9 @@ namespace SpaceExplorer
         SpaceExplorer.Controls controls;
         Assets assets;
 
+        Font font;
+        Brush brush = new SolidBrush(Color.Red);
+
         // keyboard keypresses
         bool btnUp;
         bool btnDown;
@@ -28,6 +31,7 @@ namespace SpaceExplorer
             Text = "Welcome to Space Explorer!";
             Size = new Size(800, 600);
             DoubleBuffered = true;
+            font = new Font("Courier New", 10, FontStyle.Regular);
 
             // setup a timer to refresh the screen and process game entities
             stepTimer = new Timer();
@@ -94,6 +98,9 @@ namespace SpaceExplorer
                 float y = (ey + (Enemy.HEIGHT / 2)) - (tex.Height / 2);
                 painter.Graphics.DrawImage(tex, x, y, tex.Width, tex.Height);
             }
+
+            // draw the HUD
+            painter.Graphics.DrawString($"Health: {player.Health}", font, brush, (Width / 2) - 100, Height - 70);
         }
 
         protected override void OnMouseMove(MouseEventArgs e)

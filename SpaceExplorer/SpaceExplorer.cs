@@ -7,6 +7,8 @@ namespace SpaceExplorer
     // encapsulates and provides methods to operate on game state
     class SpaceExplorer
     {
+        const int RESET_TIMER = 100;
+
         // processing multiplier to compensate for fast or slow game loop
         internal static float Delta { get; private set; } = 1.0f;
         private static Random random = new Random();
@@ -16,11 +18,14 @@ namespace SpaceExplorer
         internal List<Bullet> Bullets { get; private set; }
         internal List<Enemy> Enemies { get; private set; }
 
+        private float resetTimer;
+
         internal SpaceExplorer()
         {
             Player1 = new Player();
             Bullets = new List<Bullet>();
             Enemies = new List<Enemy>();
+            resetTimer = RESET_TIMER;
         }
 
         // the "tick" function, processes all game entities
@@ -34,11 +39,25 @@ namespace SpaceExplorer
 
             // process enemies
             Enemy.Step(Enemies, Bullets, Player1);
+
+            // check for gameover
+            if (Player1.Health < 1 && resetTimer <= 0.0f)
+                Reset();
+            else
+                resetTimer -= Delta;
         }
 
         internal static int RandomInt(int min, int max)
         {
             return random.Next(min, max);
+        }
+        
+        internal void Reset()
+        {
+            Player1 = new Player();
+            Bullets.Clear();
+            Enemies.Clear();
+            resetTimer = RESET_TIMER;
         }
 
         internal struct Controls

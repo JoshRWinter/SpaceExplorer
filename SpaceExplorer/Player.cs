@@ -10,7 +10,7 @@ namespace SpaceExplorer
         internal const int MAX_SPEED = 5;
         internal const int TIMER_FIRE = 5;
 
-        int Health { get; set; }
+        internal int Health { get; private set; }
         float TimerFire { get; set; }
 
         internal Player() : base(100.0f, 100.0f, WIDTH, HEIGHT)
@@ -41,6 +41,11 @@ namespace SpaceExplorer
 
             if(TimerFire > 0.0)
                 TimerFire -= SpaceExplorer.Delta;
+        }
+
+        internal void Hit()
+        {
+            Health -= (int)(Bullet.DAMAGE / 1.5);
         }
     }
 }
