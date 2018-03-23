@@ -62,8 +62,11 @@ namespace SpaceExplorer
 
             // draw the player
             Bitmap tex = assets.GetPlayer(player.Rot);
-            float x = (player.X + (Player.WIDTH / 2)) - (tex.Width / 2);
-            float y = (player.Y + (Player.HEIGHT / 2)) - (tex.Height / 2);
+            float px = player.X;
+            float py = player.Y;
+            AdjustCoords(ref px, ref py, player);
+            float x = (px + (Player.WIDTH / 2)) - (tex.Width / 2);
+            float y = (py + (Player.HEIGHT / 2)) - (tex.Height / 2);
             painter.Graphics.DrawImage(tex, x, y, tex.Width, tex.Height);
         }
 
@@ -72,9 +75,10 @@ namespace SpaceExplorer
             base.OnMouseMove(e);
 
             Point p = e.Location;
-            Player player = game.Player1;
+            float px = Width / 2;
+            float py = Height / 2;
 
-            controls.LookAngle =(float)Math.Atan2(p.Y - (player.Y + (Player.HEIGHT / 2)), p.X - (player.X + (Player.WIDTH / 2)));
+            controls.LookAngle =(float)Math.Atan2(p.Y - (py + (Player.HEIGHT / 2)), p.X - (px + (Player.WIDTH / 2)));
         }
 
         protected override void OnKeyDown(KeyEventArgs e)
@@ -132,6 +136,12 @@ namespace SpaceExplorer
                 controls.Intensity = 0.0f;
             else
                 controls.Intensity = 1.0f;
+        }
+
+        private void AdjustCoords(ref float x, ref float y, Player player)
+        {
+            x = x - (player.X + (Player.WIDTH / 2)) + (Width / 2);
+            y = y - (player.Y + (Player.HEIGHT / 2)) + (Height / 2);
         }
     }
 
