@@ -18,7 +18,7 @@ namespace SpaceExplorer
         {
             Xv = -(float)Math.Cos(Rot) * SPEED;
             Yv = -(float)Math.Sin(Rot) * SPEED;
-            ttl = 100;
+            ttl = 60;
             Parent = parent;
         }
 
