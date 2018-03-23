@@ -104,6 +104,7 @@ namespace SpaceExplorer
             painter.Graphics.DrawString($"Health: {(player.Health < 0 ? 0 : player.Health)}", font, brush, (Width / 2) - 100, Height - 70);
             if (player.Health < 1)
                 painter.Graphics.DrawString("You Died", fontBig, brush, (Width / 2) - 90, (Height / 2) - 100);
+            painter.Graphics.DrawString($"Score: {player.Score}", font, brush, (Width / 2) - 100, Height - 90);
         }
 
         protected override void OnMouseMove(MouseEventArgs e)

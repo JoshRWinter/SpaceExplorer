@@ -11,6 +11,7 @@ namespace SpaceExplorer
         internal const int TIMER_FIRE = 5;
 
         internal int Health { get; private set; }
+        internal int Score { get; set; }
         float TimerFire { get; set; }
 
         internal Player() : base(100.0f, 100.0f, WIDTH, HEIGHT)
@@ -26,14 +27,17 @@ namespace SpaceExplorer
             Yv = (float)Math.Sin(controls.MovementAngle) * controls.Intensity * MAX_SPEED;
 
             // update player position
-            X += Xv;
-            Y += Yv;
+            if (Health > 0)
+            {
+                X += Xv;
+                Y += Yv;
+            }
 
             // update look angle
             Rot = controls.LookAngle + (float)Math.PI;
 
             // shoot
-            if (controls.Firing && TimerFire <= 0.0f)
+            if (controls.Firing && TimerFire <= 0.0f && Health > 0)
             {
                 bulletList.Add(new Bullet(this));
                 TimerFire = TIMER_FIRE;

@@ -8,6 +8,7 @@ namespace SpaceExplorer
         internal const int WIDTH = 40;
         internal const int HEIGHT = 40;
         internal const int SPEED = 4;
+        internal const int SCORE = 10;
 
         internal const int AGGRO_TIMER = 100;
         internal const int FIRE_TIMER = 20;
@@ -48,6 +49,7 @@ namespace SpaceExplorer
                 if(enemy.health < 1)
                 {
                     enemyList.RemoveAt(i);
+                    player.Score += Enemy.SCORE;
                     continue;
                 }
 
