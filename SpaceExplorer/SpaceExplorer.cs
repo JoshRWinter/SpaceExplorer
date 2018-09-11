@@ -55,6 +55,7 @@ namespace SpaceExplorer
             return random.Next(min, max);
         }
         
+        // when the player dies
         internal void Reset()
         {
             Player1 = new Player();
@@ -63,6 +64,7 @@ namespace SpaceExplorer
             resetTimer = RESET_TIMER;
         }
 
+        // input controls
         internal struct Controls
         {
             private float intensity;

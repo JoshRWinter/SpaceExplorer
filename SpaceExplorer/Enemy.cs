@@ -10,15 +10,15 @@ namespace SpaceExplorer
         internal const int SPEED = 4;
         internal const int SCORE = 10;
 
-        internal const int AGGRO_TIMER = 100;
-        internal const int FIRE_TIMER = 20;
+        internal const int AGGRO_TIMER = 100; // how long they are aggressive for, decremented once per frame
+        internal const int FIRE_TIMER = 20; // cool-down between firing lasers
 
-        float waitTimer;
+        float waitTimer; // how long they stay in one spot until moving to a different spot
         float aggroTimer; // timer until enemy forgets about player
         float fireTimer;
         float health = 100;
 
-        Entity destination;
+        Entity destination; // screen coordinates they are heading to, null if stationary
 
         internal Enemy(float x, float y) : base(x, y, WIDTH, HEIGHT)
         {
@@ -113,6 +113,7 @@ namespace SpaceExplorer
 
         }
 
+        // this enemy was hit by a laser
         internal void Hit()
         {
             aggroTimer = AGGRO_TIMER;
